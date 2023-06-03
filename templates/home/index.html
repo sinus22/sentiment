@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Salom kummi </h1>
+    {% load crispy_forms_tags %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Testlash</button>
+
+    </form>
+
+    {% if result %}
+        <hr>
+        <hr>
+        {{ result.data }} ijobiy
+    {% endif %}
+
+{% endblock %}
