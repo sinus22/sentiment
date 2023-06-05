@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Salom kummi </h1>
+    <h1>Salom </h1>
     {% load crispy_forms_tags %}
     <form action="" method="post">
         {% csrf_token %}
@@ -12,7 +12,10 @@
     {% if result %}
         <hr>
         <hr>
-        {{ result.data }} ijobiy
+        <b>Matndagi sentiment:</b> {{ result.text }}
+        <p><b>Predicted Scores</b>:</p>
+        <p><b>Positive: </b> {{ result.positive }}</p>
+        <p><b>Negative: </b> {{ result.negative }}</p>
     {% endif %}
 
 {% endblock %}
