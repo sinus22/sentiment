@@ -2,3 +2,5 @@
 venv
 
 *.pyc
+sentiment_model.sav
+transform_model.sav
