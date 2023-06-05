@@ -39,8 +39,8 @@ def home_index(req: HttpRequest):
         print("Negative:", predicted_scores[0])
         result = {
             'text': polarity_names[predicted_polarity[0]],
-            'positive': predicted_scores[1],
-            'negative': predicted_scores[0]
+            'positive': int(predicted_scores[1] * 100),
+            'negative': int(predicted_scores[0] * 100)
         }
     return render(req, 'home/index.html', {
         'form': form,
