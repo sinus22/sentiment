@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col">
+            <h1>Salom </h1>
+        </div>
+        <div class="col">
+
+            <form action="{% url 'model_reinstall' %}" method="post" class="float-end">
+                {% csrf_token %}
+                <button class="btn btn-primary btn-lg">Model ni qayta o'rnatish</button>
+            </form>
+        </div>
+    </div>
+
+    {% load crispy_forms_tags %}
+    {% if result.message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-lg btn-primary w-100 myBtn" value="test" name="test">Testlash
+                </button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-lg btn-info w-100 myBtn" value="positive" name="positive">
+                    Positive ga qo'shish
+                </button>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-lg btn-info w-100 myBtn" value="negative" name="negative">
+                    Negative ga qo'shish
+                </button>
+            </div>
+
+
+        </div>
+    </form>
+
+    {% if result.text_word %}
+        <hr>
+        <hr>
+        <div class="row">
+            <div class="col">
+                <h3>Word ngram </h3>
+                <h4>
+
+                    <b>Matndagi sentiment:</b> <span class="{% if result.positive_word > result.negative_word %}
+                    text-primary
+                    {% else %} text-danger
+                    {% endif %} ">{{ result.text_word }}</span>
+                    <p><b>Predicted Scores</b>:</p>
+                    <p><b class="text-primary">Positive: </b> {{ result.positive_word }} %</p>
+                    <p><b class="text-danger">Negative: </b> {{ result.negative_word }} %</p>
+                </h4>
+            </div>
+            <div class="col">
+                <h3>Char ngram </h3>
+                <h4><b>Matndagi sentiment:</b>
+                    <span class="{% if result.positive_word > result.negative_word %}
+                    text-primary
+                    {% else %} text-danger
+                    {% endif %}">
+                    {{ result.text_char }}
+                    </span>
+                    <p><b>Predicted Scores</b>:</p>
+                    <p><b class="text-primary">Positive: </b> {{ result.positive_char }} %</p>
+                    <p><b class="text-danger">Negative: </b> {{ result.negative_char }} %</p></h4>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+{% block js %}
+    <script>
+        function deactive() {
+            if ($('#id_text').val().length > 0) {
+                $('.myBtn').prop("disabled", false);
+            } else
+                $('.myBtn').prop("disabled", true);
+        }
+
+        $('#id_text').on('input', function () {
+            deactive();
+        });
+        $(document).ready(function () {
+            deactive();
+
+        });
+    </script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import pandas as pd
 
 pd.options.mode.chained_assignment = None
@@ -84,6 +84,24 @@ def home_index(req: HttpRequest):
         'result': result
     })
 
+def home_test(req: HttpRequest):
+    form = TestForm(req.POST or None)
+    result = {}
+    if req.method == 'POST':
+        print(req.POST)
+        data = req.POST
+        if data.get('test'):
+            result = test_models(form.data.get('text'))
+        if data.get('positive'):
+            result = add_text(form.data.get('text'), True)
+        if data.get('negative'):
+            result = add_text(form.data.get('text'), False)
+
+    return render(req, 'home/test.html', {
+        'form': form,
+        'result': result
+    })
+
 
 def model_reinstall(req: HttpRequest):
     if req.method == 'POST':
@@ -163,6 +181,8 @@ def model_reinstall(req: HttpRequest):
 
         pickle.dump(lr_char, open(CHAR_MODEL, 'wb'))
         pickle.dump(vectorizer_char, open(CHAR_TRANSFORM, 'wb'))
+        return redirect(req.META.get('HTTP_REFERER'))
+
 
     return render(req, 'home/reinstall.html')
 
