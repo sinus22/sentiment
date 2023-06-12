@@ -1,6 +1,7 @@
 asgiref==3.7.2
 crispy-bootstrap5==0.7
 Django==4.2.1
+django-active-link==0.1.8
 django-crispy-forms==2.0
 joblib==1.2.0
 numpy==1.24.3

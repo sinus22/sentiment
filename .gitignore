@@ -5,3 +5,8 @@ venv
 sentiment_model.sav
 transform_model.sav
 predictions/y_true.csv
+
+word_model.sav
+word_transform.sav
+char_model.sav
+char_transform.sav
